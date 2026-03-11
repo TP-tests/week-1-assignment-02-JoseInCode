@@ -4,6 +4,9 @@
 
 Write **at least 50 words** explaining what hardware is.
 
+I am trying to explain this.
+
+
 ---
 
 ## Explain Software

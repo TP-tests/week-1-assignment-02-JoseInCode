@@ -10,7 +10,7 @@ H1 = r"# Part 1 – Hardware vs Software"
 H2_SECTIONS = [
     r"## Explain Hardware",
     r"## Explain Software",
-    r"## How Do Hardware and Software Interact\?",
+    r"## How Do Hardware and Software Interact?",
 ]
 
 MIN_WORDS = 50

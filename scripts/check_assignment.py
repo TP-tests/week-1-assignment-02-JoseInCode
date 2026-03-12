@@ -5,12 +5,12 @@ from pathlib import Path
 
 ASSIGNMENT_FILE = Path("01_hardware_vs_software.md")
 
-# Expected headings (exact match)
-H1 = r"# Part 1 – Hardware vs Software"
+# Expected headings as literal text (no regex escapes here)
+H1 = "# Part 1 – Hardware vs Software"
 H2_SECTIONS = [
-    r"## Explain Hardware",
-    r"## Explain Software",
-    r"## How Do Hardware and Software Interact\?",
+    "## Explain Hardware",
+    "## Explain Software",
+    "## How Do Hardware and Software Interact?",
 ]
 
 MIN_WORDS = 50
@@ -33,6 +33,9 @@ def count_words(text: str) -> int:
     # Basic word tokenizer: sequences of letters/digits/apostrophes/hyphens
     tokens = re.findall(r"[A-Za-z0-9]+(?:['-][A-Za-z0-9]+)?", text)
     return len(tokens)
+
+def list_detected_h2(md: str) -> list[str]:
+    return re.findall(r"(?m)^(## .+?)\s*$", md)
 
 def extract_section_body(md: str, section_heading: str) -> str | None:
     """
@@ -65,21 +68,19 @@ def main() -> None:
 
     # 2) Check each H2 exists and has >= MIN_WORDS body
     for h2 in H2_SECTIONS:
-        # Human‑readable version of the heading (remove regex escapes like '\?')
-        display_h2 = h2.replace(r"\?", "?")
-
         if not re.search(rf"(?m)^{re.escape(h2)}\s*$", md):
-            fail(f"Missing exact section heading: '{display_h2}'")
+            detected = list_detected_h2(md)
+            fail(f"Missing exact section heading: '{h2}'. Detected H2 headings: {detected}")
 
         body = extract_section_body(md, h2)
         if body is None:
-            fail(f"Could not extract content under section: '{display_h2}'")
+            fail(f"Could not extract content under section: '{h2}'")
 
         words = count_words(body)
         if words < MIN_WORDS:
-            fail(f"Section '{display_h2}' has {words} words; minimum required is {MIN_WORDS}.")
+            fail(f"Section '{h2}' has {words} words; minimum required is {MIN_WORDS}.")
         else:
-            info(f"Section '{display_h2}' OK: {words} words (≥ {MIN_WORDS}).")
+            info(f"Section '{h2}' OK: {words} words (≥ {MIN_WORDS}).")
 
     print("All checks passed.")
     print("RESULT: PASS")

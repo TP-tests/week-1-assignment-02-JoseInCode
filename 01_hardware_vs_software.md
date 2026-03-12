@@ -27,7 +27,7 @@ Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapi
 
 ---
 
-## How Do Hardware and Software Interact?
+## How Do Hardware and Software Interact
 
 Write **at least 50 words** describing how they interact.
 
